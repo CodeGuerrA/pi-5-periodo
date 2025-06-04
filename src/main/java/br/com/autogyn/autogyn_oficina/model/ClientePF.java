@@ -3,6 +3,7 @@ package br.com.autogyn.autogyn_oficina.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Pattern;
 
 //Entidade
 @Entity
@@ -10,6 +11,9 @@ import jakarta.persistence.Table;
 public class ClientePF extends Cliente {
 
     @Column(name = "cpf", nullable = false, unique = true)
+    // Usei a bean validation para fazer um regex para validar as entradas de cpf e
+    // cnpj
+    @Pattern(regexp = "^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$", message = "CPF inválido. Use o formato 000.000.000-00")
     private String cpf;
 
     public ClientePF() {

@@ -26,7 +26,7 @@ public class ClienteController {
         return clienteService.listarTodos();
     }
 
-    // deletenado usuario pelo id dele
+    // Deletenado usuario pelo id dele
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         try {
@@ -38,6 +38,8 @@ public class ClienteController {
 
     }
 
+    // Para fazer a atualização vc deve passar o id dps da rota
+    // http://localhost:8080/clientes/1
     @PutMapping("/{id}")
     public ResponseEntity<Cliente> atualizarCliente(@PathVariable Long id, @RequestBody ClienteDTO clienteDTO) {
         try {

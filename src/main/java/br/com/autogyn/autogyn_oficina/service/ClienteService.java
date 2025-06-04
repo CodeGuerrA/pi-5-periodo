@@ -45,20 +45,19 @@ public class ClienteService {
 
     // metodo para criar um usuario
     public Cliente criarCliente(String nome, String endereco, String telefone, String documento) {
-        String docLimpo = documento.replaceAll("\\D", "");
         // Aqui quando passa o documento eu limpo ele com regex para poder fazer a
         // contagem dos caracters para verficar se e cnpj ou cpf
         ClienteFactory.TipoCliente tipo; //
 
-        if (docLimpo.length() == 11) {
+        if (documento.length() == 14) {
             tipo = ClienteFactory.TipoCliente.PESSOA_FISICA;
-        } else if (docLimpo.length() == 14) {
+        } else if (documento.length() == 18) {
             tipo = ClienteFactory.TipoCliente.PESSOA_JURIDICA;
         } else {
             throw new IllegalArgumentException("Documento inválido: deve ser CPF (11 dígitos) ou CNPJ (14 dígitos).");
         }
 
-        Cliente cliente = ClienteFactory.criarCliente(tipo, nome, endereco, telefone, docLimpo);
+        Cliente cliente = ClienteFactory.criarCliente(tipo, nome, endereco, telefone, documento);
         // cliente instanceof ClientePF verifica se o objeto referenciado por cliente é
         // uma instância da classe ClientePF ou de alguma subclasse dela. Se for true
         // ele cria o formulario para ClientePF senao vai para PJ
@@ -85,14 +84,11 @@ public class ClienteService {
 
         Cliente cliente = clienteOptional.get();
 
-        // Limpar documento para comparar
-        String docLimpo = documento.replaceAll("\\D", "");
-
         // Verificar o tipo do documento enviado para evitar inconsistência
         ClienteFactory.TipoCliente tipo;
-        if (docLimpo.length() == 11) {
+        if (documento.length() == 14) {
             tipo = ClienteFactory.TipoCliente.PESSOA_FISICA;
-        } else if (docLimpo.length() == 14) {
+        } else if (documento.length() == 18) {
             tipo = ClienteFactory.TipoCliente.PESSOA_JURIDICA;
         } else {
             throw new IllegalArgumentException("Documento inválido: deve ser CPF (11 dígitos) ou CNPJ (14 dígitos).");
@@ -111,10 +107,10 @@ public class ClienteService {
         cliente.setTelefone(telefone);
 
         if (cliente instanceof ClientePF) {
-            ((ClientePF) cliente).setCpf(docLimpo);
+            ((ClientePF) cliente).setCpf(documento);
             return clientePFRepository.save((ClientePF) cliente);
         } else if (cliente instanceof ClientePJ) {
-            ((ClientePJ) cliente).setCnpj(docLimpo);
+            ((ClientePJ) cliente).setCnpj(documento);
             return clientePJRepository.save((ClientePJ) cliente);
         } else {
             throw new IllegalArgumentException("Tipo de cliente não suportado para atualização.");
