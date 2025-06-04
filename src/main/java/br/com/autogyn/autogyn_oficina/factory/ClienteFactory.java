@@ -12,6 +12,7 @@ public class ClienteFactory {
     }
 
     // Dependendo do tipo ira passar se o documento sera o cpf ou cnpj
+    // testamdp
     public static Cliente criarCliente(TipoCliente tipo, String nome, String endereco, String telefone,
             String documento) {
         switch (tipo) {
