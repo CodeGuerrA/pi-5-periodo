@@ -1,4 +1,4 @@
-package br.com.autogyn.autogyn_oficina.model;
+package br.com.autogyn.autogyn_oficina.enums;
 
 public enum StatusPagamento {
     PAGO,

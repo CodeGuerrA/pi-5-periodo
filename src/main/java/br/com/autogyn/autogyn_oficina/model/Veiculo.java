@@ -1,12 +1,19 @@
 package br.com.autogyn.autogyn_oficina.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import br.com.autogyn.autogyn_oficina.enums.TipoVeiculos;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 //Amanhã fazer associação de Veiculo e Cliente 
@@ -22,12 +29,24 @@ public class Veiculo {
 
     @Column(name = "placa")
     private String placa;
+
     @Column(name = "modelo")
     private String modelo;
+
     @Column(name = "ano")
     private String ano;
+
     @Column(name = "cor")
     private String cor;
+
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    @JsonBackReference
+    private Cliente cliente;
+
+    // Enum do papai
+    @Enumerated(EnumType.STRING)
+    private TipoVeiculos tipo;
 
     public Veiculo() {
     }
@@ -77,6 +96,22 @@ public class Veiculo {
 
     public void setCor(String cor) {
         this.cor = cor;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public TipoVeiculos getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoVeiculos tipo) {
+        this.tipo = tipo;
     }
 
 }

@@ -29,10 +29,14 @@ public class VeiculoController {
                     dto.getPlaca(),
                     dto.getModelo(),
                     dto.getAno(),
-                    dto.getCor());
+                    dto.getCor(),
+                    dto.getClienteId()); // Passa o clienteId aqui
+
             return ResponseEntity.status(HttpStatus.CREATED).body(veiculo);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
+        } catch (RuntimeException e) { // Pode capturar a exceção do cliente não encontrado
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 

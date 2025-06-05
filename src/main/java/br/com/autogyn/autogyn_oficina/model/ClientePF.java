@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Pattern;
 
 //Entidade
 @Entity
-@Table(name = "cliente_cpf")
+@Table(name = "cliente_pf")
 public class ClientePF extends Cliente {
 
     // Usei a bean validation para fazer um regex para validar as entradas de cpf e

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import br.com.autogyn.autogyn_oficina.dto.ClienteDTO;
 import br.com.autogyn.autogyn_oficina.model.Cliente;
+import br.com.autogyn.autogyn_oficina.model.Veiculo;
 import br.com.autogyn.autogyn_oficina.service.ClienteService;
 
 @RestController
@@ -31,6 +32,18 @@ public class ClienteController {
     @GetMapping("/{id}")
     public Optional<Cliente> buscarPorID(@PathVariable Long id) {
         return clienteService.buscarPorId(id);
+    }
+
+    // *** Adicionado método para listar veículos do cliente ***
+    @GetMapping("/{clienteId}/veiculos")
+    public ResponseEntity<List<Veiculo>> listarVeiculosDoCliente(@PathVariable Long clienteId) {
+        Optional<Cliente> clienteOpt = clienteService.buscarPorId(clienteId);
+        if (clienteOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<Veiculo> veiculos = clienteOpt.get().getVeiculo();
+        return ResponseEntity.ok(veiculos);
     }
 
     // Deletenado usuario pelo id dele {Funcionando}

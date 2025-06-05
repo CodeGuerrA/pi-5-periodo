@@ -1,13 +1,11 @@
 package br.com.autogyn.autogyn_oficina.factory;
 
+import br.com.autogyn.autogyn_oficina.enums.TipoVeiculos;
 import br.com.autogyn.autogyn_oficina.model.Carro;
 import br.com.autogyn.autogyn_oficina.model.Moto;
 import br.com.autogyn.autogyn_oficina.model.Veiculo;
 
 public class VeiculoFactory {
-    public enum TipoVeiculos {
-        CARRO, MOTO
-    }
 
     public static Veiculo criarVeiculo(TipoVeiculos tipo, String placa, String modelo, String ano, String cor) {
         switch (tipo) {

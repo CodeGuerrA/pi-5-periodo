@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import br.com.autogyn.autogyn_oficina.enums.StatusPagamento;
+
 @Entity
 public class Pagamento {
 

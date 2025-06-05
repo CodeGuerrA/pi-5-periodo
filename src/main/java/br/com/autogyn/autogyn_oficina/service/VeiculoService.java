@@ -5,11 +5,14 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import br.com.autogyn.autogyn_oficina.enums.TipoVeiculos;
 import br.com.autogyn.autogyn_oficina.factory.VeiculoFactory;
 import br.com.autogyn.autogyn_oficina.model.Carro;
+import br.com.autogyn.autogyn_oficina.model.Cliente;
 import br.com.autogyn.autogyn_oficina.model.Moto;
 import br.com.autogyn.autogyn_oficina.model.Veiculo;
 import br.com.autogyn.autogyn_oficina.repository.CarroRepository;
+import br.com.autogyn.autogyn_oficina.repository.ClienteRepository;
 import br.com.autogyn.autogyn_oficina.repository.MotoRepository;
 import br.com.autogyn.autogyn_oficina.repository.VeiculoRepository;
 
@@ -19,12 +22,14 @@ public class VeiculoService {
     private final VeiculoRepository veiculoRepository;
     private final MotoRepository motoRepository;
     private final CarroRepository carroRepository;
+    private final ClienteRepository clienteRepository;
 
     public VeiculoService(VeiculoRepository veiculoRepository, MotoRepository motoRepository,
-            CarroRepository carroRepository) {
+            CarroRepository carroRepository, ClienteRepository clienteRepository) {
         this.veiculoRepository = veiculoRepository;
         this.motoRepository = motoRepository;
         this.carroRepository = carroRepository;
+        this.clienteRepository = clienteRepository;
     }
 
     public Optional<Veiculo> buscarPorID(Long id) {
@@ -39,9 +44,25 @@ public class VeiculoService {
         veiculoRepository.deleteById(id);
     }
 
-    public Veiculo criarVeiculo(VeiculoFactory.TipoVeiculos tipo, String placa, String modelo, String ano, String cor) {
+    // Agora so da para criar o veiculo passando o id do cliente para referenciar
+    // que o veiculo e daquele cliente
+    public Veiculo criarVeiculo(TipoVeiculos tipo, String placa, String modelo, String ano, String cor,
+            Long clienteId) {
+
+        // Cria o veículo pelo factory
         Veiculo veiculo = VeiculoFactory.criarVeiculo(tipo, placa, modelo, ano, cor);
 
+        // Setar o tipo no veículo
+        veiculo.setTipo(tipo);
+
+        // Busca o cliente, lança exceção se não encontrar
+        Cliente cliente = clienteRepository.findById(clienteId)
+                .orElseThrow(() -> new RuntimeException("Cliente não encontrado com id: " + clienteId));
+
+        // Associa cliente ao veículo
+        veiculo.setCliente(cliente);
+
+        // Salva no repositório correto, conforme o tipo do veículo
         if (veiculo instanceof Carro) {
             return carroRepository.save((Carro) veiculo);
         } else if (veiculo instanceof Moto) {

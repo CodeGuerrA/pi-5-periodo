@@ -1,7 +1,7 @@
 package br.com.autogyn.autogyn_oficina.service;
 
+import br.com.autogyn.autogyn_oficina.enums.StatusPagamento;
 import br.com.autogyn.autogyn_oficina.model.Pagamento;
-import br.com.autogyn.autogyn_oficina.model.StatusPagamento;
 import br.com.autogyn.autogyn_oficina.repository.PagamentoRepository;
 import br.com.autogyn.autogyn_oficina.template.*;
 import org.springframework.stereotype.Service;
@@ -46,4 +46,3 @@ public class PagamentoService {
         return pagamentoRepository.save(pagamento);
     }
 }
-
