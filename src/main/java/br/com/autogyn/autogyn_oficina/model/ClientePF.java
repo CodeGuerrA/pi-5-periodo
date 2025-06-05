@@ -7,12 +7,12 @@ import jakarta.validation.constraints.Pattern;
 
 //Entidade
 @Entity
-@Table(name = "cliente_pf")
+@Table(name = "cliente_cpf")
 public class ClientePF extends Cliente {
 
-    @Column(name = "cpf", nullable = false, unique = true)
     // Usei a bean validation para fazer um regex para validar as entradas de cpf e
     // cnpj
+    @Column(name = "cpf", nullable = false, unique = true)
     @Pattern(regexp = "^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$", message = "CPF inválido. Use o formato 000.000.000-00")
     private String cpf;
 

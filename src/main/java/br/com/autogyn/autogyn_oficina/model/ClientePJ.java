@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Pattern;
 
 //Entidade
 @Entity
-@Table(name = "cliente_pj")
+@Table(name = "cliente_pf")
 public class ClientePJ extends Cliente {
 
     @Column(name = "cnpj", nullable = false, unique = true)

@@ -1,6 +1,7 @@
 package br.com.autogyn.autogyn_oficina.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +21,19 @@ public class ClienteController {
         this.clienteService = clienteService;
     }
 
-    // Endpoint para listar todos (PF + PJ)
+    // Endpoint para listar todos (PF + PJ) {Funcionando}
     @GetMapping
     public List<Cliente> listar() {
         return clienteService.listarTodos();
     }
 
-    // Deletenado usuario pelo id dele
+    // Buscar pelo ID o user {Funcionando}
+    @GetMapping("/{id}")
+    public Optional<Cliente> buscarPorID(@PathVariable Long id) {
+        return clienteService.buscarPorId(id);
+    }
+
+    // Deletenado usuario pelo id dele {Funcionando}
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         try {
@@ -38,7 +45,7 @@ public class ClienteController {
 
     }
 
-    // Para fazer a atualização vc deve passar o id dps da rota
+    // Para fazer a atualização vc deve passar o id dps da rota {Funcionando}
     // http://localhost:8080/clientes/1
     @PutMapping("/{id}")
     public ResponseEntity<Cliente> atualizarCliente(@PathVariable Long id, @RequestBody ClienteDTO clienteDTO) {
@@ -63,6 +70,8 @@ public class ClienteController {
     // Va na classe DTO ira entender sua funcionalidade
     // Para esconder tbm valores que nao quero que apareça ele esta sendo usado para
     // nao precisar passar varios parametros em RequestBody e somente os que quero.
+
+    // Criar Cliente {Funcionando}
     @PostMapping
     public ResponseEntity<Cliente> criarCliente(@RequestBody ClienteDTO clienteDTO) {
         try {

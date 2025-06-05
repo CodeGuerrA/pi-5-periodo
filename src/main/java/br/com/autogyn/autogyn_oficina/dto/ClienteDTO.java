@@ -1,6 +1,7 @@
 package br.com.autogyn.autogyn_oficina.dto;
 
 //Criei o DTO para em vez de passar no controller todos os parametros passa do CLienteDTO com os parametros que quero que ja vai criar os Clientes
+//usei para nao expor dados sensiveis e somente aqueles que quero boa pratica
 public class ClienteDTO {
     private String nome;
     private String endereco;

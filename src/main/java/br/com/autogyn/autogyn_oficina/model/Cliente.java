@@ -8,13 +8,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
+//Amanhã fazer associação de Veiculo e Cliente 
 
 //Referenciando como tabela e passando o nome dela como cliente
 @Table(name = "cliente")
 // Tag entidade
 @Entity
 // Faz o mapeamento da herança usando tabelas separadas que se juntam via JOIN
-// no banco.
+// no banco ele ja cria a FK para PF E PJ
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Cliente {
 
@@ -22,11 +23,11 @@ public abstract class Cliente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column
+    @Column(name = "nome", nullable = false)
     private String nome;
-    @Column
+    @Column(name = "endereco")
     private String endereco;
-    @Column
+    @Column(name = "telefone", nullable = false)
     private String telefone;
 
     public Cliente() {
