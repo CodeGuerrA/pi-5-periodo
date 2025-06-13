@@ -1,0 +1,75 @@
+package br.com.autogyn.autogyn_oficina.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import br.com.autogyn.autogyn_oficina.dto.OrdemServicoDTO;
+import br.com.autogyn.autogyn_oficina.entity.OrdemServico;
+import br.com.autogyn.autogyn_oficina.service.OrdemServicoService;
+import jakarta.persistence.EntityNotFoundException;
+
+@RestController
+@RequestMapping("/api/ordens-servico")
+public class OrdemServicoController {
+
+    @Autowired
+    private OrdemServicoService ordemServicoService;
+
+    @GetMapping
+    public List<OrdemServico> listarTodos() {
+        return ordemServicoService.listarTodas();
+    }
+
+    @PostMapping
+    public ResponseEntity<?> criarOrdemServico(@RequestBody OrdemServicoDTO dto) {
+        try {
+            if (dto.getItemPecaIds() == null || dto.getItemPecaIds().isEmpty()) {
+                return ResponseEntity.badRequest().body("É necessário informar pelo menos um item de peça.");
+            }
+
+            if (dto.getFuncionarioId() == null) {
+                return ResponseEntity.badRequest().body("ID do funcionário é obrigatório.");
+            }
+
+            OrdemServico ordem = new OrdemServico();
+            ordem.setDescricaoProblema(dto.getDescricaoProblema());
+
+            OrdemServico novaOrdem = ordemServicoService.criar(
+                    ordem,
+                    dto.getClienteId(),
+                    dto.getVeiculoId(),
+                    dto.getItemPecaIds(),
+                    dto.getQuantidadePecas(),
+                    dto.getFuncionarioId());
+
+            return ResponseEntity.ok(novaOrdem);
+        } catch (EntityNotFoundException | IllegalStateException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> atualizarOrdemServico(
+            @PathVariable Long id,
+            @RequestBody OrdemServicoDTO dto) {
+        try {
+            OrdemServico ordem = new OrdemServico();
+            ordem.setDescricaoProblema(dto.getDescricaoProblema());
+
+            OrdemServico atualizada = ordemServicoService.atualizaOrdemServico(
+                    id,
+                    ordem,
+                    dto.getClienteId(),
+                    dto.getVeiculoId(),
+                    dto.getItemPecaIds(),
+                    dto.getFuncionarioId());
+
+            return ResponseEntity.ok(atualizada);
+        } catch (EntityNotFoundException | IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+}
