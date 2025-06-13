@@ -1,0 +1,6 @@
+package br.com.autogyn.autogyn_oficina.enums;
+
+public enum TipoVeiculos {
+    CARRO,
+    MOTO
+}
