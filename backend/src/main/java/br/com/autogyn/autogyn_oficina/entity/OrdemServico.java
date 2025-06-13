@@ -57,6 +57,11 @@ public class OrdemServico {
     @JoinColumn(name = "funcionario_id", nullable = false)
     private Funcionario funcionario;
 
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "pagamento_id")
+    private Pagamento pagamento;
+
     public OrdemServico() {
     }
 
@@ -140,4 +145,11 @@ public class OrdemServico {
         this.funcionario = funcionario;
     }
 
+    public Pagamento getPagamento() {
+        return pagamento;
+    }
+
+    public void setPagamento(Pagamento pagamento) {
+        this.pagamento = pagamento;
+    }
 }

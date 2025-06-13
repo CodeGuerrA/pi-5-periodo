@@ -15,7 +15,6 @@ public class Pagamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Valor total é obrigatório")
     @DecimalMin(value = "0.0", inclusive = false, message = "Valor total deve ser maior que zero")
     @Column(nullable = false)
     private BigDecimal valorTotal;
@@ -24,14 +23,24 @@ public class Pagamento {
     @Column(nullable = false)
     private String formaPagamento;
 
-    @NotNull(message = "Data do pagamento é obrigatória")
     @Column(nullable = false)
     private LocalDate dataPagamento;
 
-    @NotNull(message = "Status do pagamento é obrigatório")
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private StatusPagamento status;
+
+    public Pagamento() {
+    }
+
+    
+    public Pagamento(BigDecimal valorTotal, String formaPagamento, LocalDate dataPagamento, StatusPagamento status) {
+        this.valorTotal = valorTotal;
+        this.formaPagamento = formaPagamento;
+        this.dataPagamento = dataPagamento;
+        this.status = status;
+    }
+
 
     // Getters e setters
     public Long getId() {

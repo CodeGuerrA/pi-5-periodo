@@ -1,11 +1,15 @@
 package br.com.autogyn.autogyn_oficina.controller;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import br.com.autogyn.autogyn_oficina.dto.FinalizacaoOrdemDTO;
 import br.com.autogyn.autogyn_oficina.dto.OrdemServicoDTO;
 import br.com.autogyn.autogyn_oficina.entity.OrdemServico;
 import br.com.autogyn.autogyn_oficina.service.OrdemServicoService;
@@ -21,6 +25,11 @@ public class OrdemServicoController {
     @GetMapping
     public List<OrdemServico> listarTodos() {
         return ordemServicoService.listarTodas();
+    }
+
+    @GetMapping("/{id}")
+    public Optional<OrdemServico> buscarPorId(@PathVariable Long id) {
+        return ordemServicoService.buscarPorId(id);
     }
 
     @PostMapping
@@ -51,6 +60,12 @@ public class OrdemServicoController {
         }
     }
 
+    @PostMapping("/{id}/finalizar")
+    public ResponseEntity<String> finalizarOrdemServico(@RequestBody FinalizacaoOrdemDTO dto) {
+        ordemServicoService.finalizarOrdemServico(dto.getIdOrdemServico(), dto.getFormaPagamento());
+        return ResponseEntity.ok("Finalizada com sucesso.");
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<?> atualizarOrdemServico(
             @PathVariable Long id,
@@ -65,11 +80,22 @@ public class OrdemServicoController {
                     dto.getClienteId(),
                     dto.getVeiculoId(),
                     dto.getItemPecaIds(),
+                    dto.getQuantidadePecas(),
                     dto.getFuncionarioId());
 
             return ResponseEntity.ok(atualizada);
         } catch (EntityNotFoundException | IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        try {
+            ordemServicoService.deletarOrdemServico(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
         }
     }
 }

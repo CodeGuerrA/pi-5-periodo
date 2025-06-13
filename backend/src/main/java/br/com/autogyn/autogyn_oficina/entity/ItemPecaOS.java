@@ -38,10 +38,9 @@ public class ItemPecaOS {
     @JoinColumn(name = "peca_id", nullable = false)
     private Peca peca;
 
-    @NotNull(message = "Ordem de serviço é obrigatória")
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "ordem_servico_id", nullable = false)
+    @JoinColumn(name = "ordem_servico_id")
     private OrdemServico ordemServico;
 
     public ItemPecaOS() {

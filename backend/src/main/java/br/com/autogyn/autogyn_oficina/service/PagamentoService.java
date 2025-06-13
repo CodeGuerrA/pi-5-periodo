@@ -40,9 +40,9 @@ public class PagamentoService {
         }
 
         pagamento.setDataPagamento(LocalDate.now());
-        pagamento.setStatus(StatusPagamento.PAGO); // definimos como pago aqui
+        pagamento.setStatus(StatusPagamento.PAGO);
 
-        processador.processarPagamento(pagamento); // aplica o template method
+        processador.processarPagamento(pagamento);
 
         return pagamentoRepository.save(pagamento);
     }

@@ -3,6 +3,7 @@ package br.com.autogyn.autogyn_oficina.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import br.com.autogyn.autogyn_oficina.entity.Pagamento;
 import br.com.autogyn.autogyn_oficina.enums.StatusOrdem;
 
 public class OrdemServicoDTO {
