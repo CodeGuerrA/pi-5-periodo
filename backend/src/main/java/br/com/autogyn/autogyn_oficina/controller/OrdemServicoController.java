@@ -3,9 +3,9 @@ package br.com.autogyn.autogyn_oficina.controller;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -98,4 +98,15 @@ public class OrdemServicoController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/{id}/relatorio-financeiro")
+    public ResponseEntity<byte[]> gerarRelatorioFinanceiro(@PathVariable Long id) {
+        byte[] pdf = ordemServicoService.gerarRelatorioFinanceiro(id);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=relatorio_os_" + id + ".pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdf);
+    }
+
 }

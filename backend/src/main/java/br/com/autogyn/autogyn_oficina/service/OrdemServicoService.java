@@ -1,14 +1,15 @@
 package br.com.autogyn.autogyn_oficina.service;
 
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
-import org.hibernate.grammars.hql.HqlParser.LocalDateTimeContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +32,12 @@ import br.com.autogyn.autogyn_oficina.repository.ItemPecaOSRepository;
 import br.com.autogyn.autogyn_oficina.repository.OrdemServicoRepository;
 import br.com.autogyn.autogyn_oficina.repository.VeiculoRepository;
 import jakarta.persistence.EntityNotFoundException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 @Service
 public class OrdemServicoService {
@@ -190,4 +197,38 @@ public class OrdemServicoService {
 
                 ordemServicoRepository.save(ordemServico);
         }
+
+        public byte[] gerarRelatorioFinanceiro(Long id) {
+                OrdemServico os = ordemServicoRepository.findById(id)
+                                .orElseThrow(() -> new EntityNotFoundException("Ordem de Serviço não encontrada."));
+
+                if (os.getStatus() != StatusOrdem.FINALIZADA) {
+                        throw new IllegalStateException("Relatório só pode ser gerado para ordens FINALIZADAS.");
+                }
+
+                try {
+                        InputStream template = getClass()
+                                        .getResourceAsStream("/relatorios/relatorio_ordem_servico.jrxml");
+                        JasperReport jasperReport = JasperCompileManager.compileReport(template);
+
+                        Map<String, Object> parametros = new HashMap<>();
+                        parametros.put("cliente", os.getCliente().getNome());
+                        parametros.put("veiculo", os.getVeiculo().getModelo());
+                        parametros.put("funcionario", os.getFuncionario().getNome());
+                        parametros.put("dataAbertura", os.getDataAbertura().toLocalDate().toString());
+                        parametros.put("dataFechamento", os.getDataFechamento().toLocalDate().toString());
+                        parametros.put("formaPagamento", os.getPagamento().getFormaPagamento());
+                        parametros.put("valorTotal", os.getPagamento().getValorTotal());
+
+                        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(os.getItensPeca());
+
+                        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametros, dataSource);
+
+                        return JasperExportManager.exportReportToPdf(jasperPrint);
+
+                } catch (Exception e) {
+                        throw new RuntimeException("Erro ao gerar relatório: " + e.getMessage(), e);
+                }
+        }
+
 }
