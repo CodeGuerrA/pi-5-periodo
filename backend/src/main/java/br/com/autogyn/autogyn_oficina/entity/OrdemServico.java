@@ -1,6 +1,7 @@
 package br.com.autogyn.autogyn_oficina.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -51,11 +52,10 @@ public class OrdemServico {
     @JsonManagedReference
     private List<ItemPecaOS> itensPeca;
 
-    @NotNull(message = "Funcionário é obrigatório")
-    @ManyToOne
-    @JsonBackReference
-    @JoinColumn(name = "funcionario_id", nullable = false)
-    private Funcionario funcionario;
+    @NotEmpty(message = "A ordem de serviço deve conter ao menos um serviço")
+    @ManyToMany
+    @JsonManagedReference
+    private List<Servico> servicos = new ArrayList<>();
 
     @ManyToOne
     @JsonBackReference
@@ -137,14 +137,6 @@ public class OrdemServico {
         this.itensPeca = itensPeca;
     }
 
-    public Funcionario getFuncionario() {
-        return funcionario;
-    }
-
-    public void setFuncionario(Funcionario funcionario) {
-        this.funcionario = funcionario;
-    }
-
     public Pagamento getPagamento() {
         return pagamento;
     }
@@ -152,4 +144,13 @@ public class OrdemServico {
     public void setPagamento(Pagamento pagamento) {
         this.pagamento = pagamento;
     }
+
+    public List<Servico> getServicos() {
+        return servicos;
+    }
+
+    public void setServicos(List<Servico> servicos) {
+        this.servicos = servicos;
+    }
+
 }

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.autogyn.autogyn_oficina.dto.PagamentoDTO;
-import br.com.autogyn.autogyn_oficina.entity.OrdemServico;
 import br.com.autogyn.autogyn_oficina.entity.Pagamento;
 import br.com.autogyn.autogyn_oficina.service.PagamentoService;
 

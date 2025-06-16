@@ -3,29 +3,21 @@ package br.com.autogyn.autogyn_oficina.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import br.com.autogyn.autogyn_oficina.entity.Pagamento;
 import br.com.autogyn.autogyn_oficina.enums.StatusOrdem;
 
 public class OrdemServicoDTO {
+
     private LocalDateTime dataAbertura;
     private String descricaoProblema;
     private StatusOrdem status;
     private Long clienteId;
     private Long veiculoId;
-    private Long funcionarioId;
-    private List<Long> itemPecaIds;
-    private List<Integer> quantidadePecas;
+    private List<Long> servicoIds; // IDs de serviços associados
+    private List<Long> itemPecaIds; // IDs de peças
+    private List<Integer> quantidadePecas; // Quantidades correspondentes
 
     public LocalDateTime getDataAbertura() {
         return dataAbertura;
-    }
-
-    public List<Integer> getQuantidadePecas() {
-        return quantidadePecas;
-    }
-
-    public void setQuantidadePecas(List<Integer> quantidadePecas) {
-        this.quantidadePecas = quantidadePecas;
     }
 
     public void setDataAbertura(LocalDateTime dataAbertura) {
@@ -64,12 +56,12 @@ public class OrdemServicoDTO {
         this.veiculoId = veiculoId;
     }
 
-    public Long getFuncionarioId() {
-        return funcionarioId;
+    public List<Long> getServicoIds() {
+        return servicoIds;
     }
 
-    public void setFuncionarioId(Long funcionarioId) {
-        this.funcionarioId = funcionarioId;
+    public void setServicoIds(List<Long> servicoIds) {
+        this.servicoIds = servicoIds;
     }
 
     public List<Long> getItemPecaIds() {
@@ -78,5 +70,13 @@ public class OrdemServicoDTO {
 
     public void setItemPecaIds(List<Long> itemPecaIds) {
         this.itemPecaIds = itemPecaIds;
+    }
+
+    public List<Integer> getQuantidadePecas() {
+        return quantidadePecas;
+    }
+
+    public void setQuantidadePecas(List<Integer> quantidadePecas) {
+        this.quantidadePecas = quantidadePecas;
     }
 }

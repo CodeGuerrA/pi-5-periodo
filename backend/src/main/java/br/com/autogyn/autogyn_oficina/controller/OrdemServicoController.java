@@ -38,13 +38,13 @@ public class OrdemServicoController {
             if (dto.getItemPecaIds() == null || dto.getItemPecaIds().isEmpty()) {
                 return ResponseEntity.badRequest().body("É necessário informar pelo menos um item de peça.");
             }
-
-            if (dto.getFuncionarioId() == null) {
-                return ResponseEntity.badRequest().body("ID do funcionário é obrigatório.");
+            if (dto.getServicoIds() == null || dto.getServicoIds().isEmpty()) {
+                return ResponseEntity.badRequest().body("É necessário informar pelo menos um serviço.");
             }
 
             OrdemServico ordem = new OrdemServico();
             ordem.setDescricaoProblema(dto.getDescricaoProblema());
+            ordem.setStatus(dto.getStatus());
 
             OrdemServico novaOrdem = ordemServicoService.criar(
                     ordem,
@@ -52,18 +52,12 @@ public class OrdemServicoController {
                     dto.getVeiculoId(),
                     dto.getItemPecaIds(),
                     dto.getQuantidadePecas(),
-                    dto.getFuncionarioId());
+                    dto.getServicoIds());
 
             return ResponseEntity.ok(novaOrdem);
         } catch (EntityNotFoundException | IllegalStateException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-    }
-
-    @PostMapping("/{id}/finalizar")
-    public ResponseEntity<String> finalizarOrdemServico(@RequestBody FinalizacaoOrdemDTO dto) {
-        ordemServicoService.finalizarOrdemServico(dto.getIdOrdemServico(), dto.getFormaPagamento());
-        return ResponseEntity.ok("Finalizada com sucesso.");
     }
 
     @PutMapping("/{id}")
@@ -73,6 +67,7 @@ public class OrdemServicoController {
         try {
             OrdemServico ordem = new OrdemServico();
             ordem.setDescricaoProblema(dto.getDescricaoProblema());
+            ordem.setStatus(dto.getStatus());
 
             OrdemServico atualizada = ordemServicoService.atualizaOrdemServico(
                     id,
@@ -81,7 +76,7 @@ public class OrdemServicoController {
                     dto.getVeiculoId(),
                     dto.getItemPecaIds(),
                     dto.getQuantidadePecas(),
-                    dto.getFuncionarioId());
+                    dto.getServicoIds());
 
             return ResponseEntity.ok(atualizada);
         } catch (EntityNotFoundException | IllegalArgumentException e) {
@@ -96,6 +91,16 @@ public class OrdemServicoController {
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/{id}/finalizar")
+    public ResponseEntity<String> finalizarOrdemServico(@RequestBody FinalizacaoOrdemDTO dto) {
+        try {
+            ordemServicoService.finalizarOrdemServico(dto.getIdOrdemServico(), dto.getFormaPagamento());
+            return ResponseEntity.ok("Finalizada com sucesso.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 

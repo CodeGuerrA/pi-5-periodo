@@ -8,11 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.autogyn.autogyn_oficina.entity.ItemPecaOS;
-import br.com.autogyn.autogyn_oficina.entity.OrdemServico;
 import br.com.autogyn.autogyn_oficina.entity.Peca;
 import br.com.autogyn.autogyn_oficina.repository.ItemPecaOSRepository;
-import br.com.autogyn.autogyn_oficina.repository.OrdemServicoRepository;
 import br.com.autogyn.autogyn_oficina.repository.PecasRepository;
+import jakarta.transaction.Transactional;
 
 @Service
 public class ItemPecaOsService {
@@ -23,8 +22,6 @@ public class ItemPecaOsService {
     private PecasService pecasService;
     @Autowired
     private PecasRepository pecaRepository;
-    @Autowired
-    private OrdemServicoRepository ordemServicoRepository;
 
     public List<ItemPecaOS> listarTodos() {
         return itemPecaOSRepository.findAll();
@@ -38,6 +35,7 @@ public class ItemPecaOsService {
         itemPecaOSRepository.deleteById(id);
     }
 
+    @Transactional
     public ItemPecaOS criarItem(Long pecaId, Integer quantidade) {
         Optional<Peca> pecaOptional = pecaRepository.findById(pecaId);
         if (pecaOptional.isEmpty()) {
@@ -61,6 +59,7 @@ public class ItemPecaOsService {
         return itemPecaOSRepository.save(item);
     }
 
+    @Transactional
     public ItemPecaOS atualizarItem(Long id, Integer novaQuantidade) {
         Optional<ItemPecaOS> itemOptional = itemPecaOSRepository.findById(id);
         if (itemOptional.isEmpty()) {

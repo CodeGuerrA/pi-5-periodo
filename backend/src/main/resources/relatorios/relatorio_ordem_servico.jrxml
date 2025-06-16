@@ -19,7 +19,7 @@
     <!-- Parâmetros de cabeçalho -->
     <parameter name="cliente" class="java.lang.String"/>
     <parameter name="veiculo" class="java.lang.String"/>
-    <parameter name="funcionario" class="java.lang.String"/>
+    <parameter name="servicos" class="java.lang.String"/>
     <parameter name="dataAbertura" class="java.lang.String"/>
     <parameter name="dataFechamento" class="java.lang.String"/>
     <parameter name="formaPagamento" class="java.lang.String"/>
@@ -30,11 +30,7 @@
     <field name="quantidade" class="java.lang.Integer"/>
     <field name="precoFinal" class="java.math.BigDecimal"/>
 
-    <!-- Variável para somar TotalGeral -->
-    <variable name="TotalGeral" class="java.math.BigDecimal" calculation="Sum">
-        <variableExpression><![CDATA[$F{precoFinal}]]></variableExpression>
-        <initialValueExpression><![CDATA[new java.math.BigDecimal("0")]]></initialValueExpression>
-    </variable>
+    <!-- REMOVIDA variável TotalGeral -->
 
     <!-- Título -->
     <title>
@@ -63,14 +59,9 @@
                 <textFieldExpression><![CDATA["Veículo: " + $P{veiculo}]]></textFieldExpression>
             </textField>
             <textField>
-                <reportElement x="0" y="20" width="280" height="20"/>
+                <reportElement x="0" y="20" width="555" height="20"/>
                 <textElement><font isBold="true"/></textElement>
-                <textFieldExpression><![CDATA["Funcionário: " + $P{funcionario}]]></textFieldExpression>
-            </textField>
-            <textField>
-                <reportElement x="300" y="20" width="255" height="20"/>
-                <textElement><font isBold="true"/></textElement>
-                <textFieldExpression><![CDATA["Forma Pagamento: " + $P{formaPagamento}]]></textFieldExpression>
+                <textFieldExpression><![CDATA["Serviços: " + $P{servicos}]]></textFieldExpression>
             </textField>
             <textField>
                 <reportElement x="0" y="40" width="280" height="20"/>
@@ -82,7 +73,6 @@
                 <textElement><font isBold="true"/></textElement>
                 <textFieldExpression><![CDATA["Data Fechamento: " + $P{dataFechamento}]]></textFieldExpression>
             </textField>
-            <!-- Exibe o total passado como BigDecimal -->
             <textField pattern="R$ #,##0.00">
                 <reportElement x="0" y="60" width="280" height="20"/>
                 <textElement><font isBold="true"/></textElement>
@@ -168,7 +158,7 @@
         </band>
     </detail>
 
-    <!-- Sumário com total geral calculado -->
+    <!-- Sumário com total geral do parâmetro valorTotal -->
     <summary>
         <band height="30">
             <staticText>
@@ -179,7 +169,7 @@
             <textField pattern="R$ #,##0.00">
                 <reportElement x="420" y="5" width="100" height="20"/>
                 <textElement textAlignment="Right"/>
-                <textFieldExpression><![CDATA[$V{TotalGeral}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$P{valorTotal}]]></textFieldExpression>
             </textField>
         </band>
     </summary>

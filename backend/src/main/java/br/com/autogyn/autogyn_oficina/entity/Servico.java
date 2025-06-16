@@ -1,10 +1,17 @@
 package br.com.autogyn.autogyn_oficina.entity;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -27,9 +34,9 @@ public class Servico {
     @Positive(message = "O valor do serviço deve ser positivo")
     private BigDecimal valor;
 
-    @OneToOne(mappedBy = "servico")
+    @ManyToMany(mappedBy = "servicos")
     @JsonBackReference
-    private AtribuicaoServico atribuicaoServico;
+    private List<OrdemServico> ordensServico;
 
     public Servico() {
     }
@@ -63,11 +70,12 @@ public class Servico {
         this.valor = valor;
     }
 
-    public AtribuicaoServico getAtribuicaoServico() {
-        return atribuicaoServico;
+    public List<OrdemServico> getOrdensServico() {
+        return ordensServico;
     }
 
-    public void setAtribuicaoServico(AtribuicaoServico atribuicaoServico) {
-        this.atribuicaoServico = atribuicaoServico;
+    public void setOrdensServico(List<OrdemServico> ordensServico) {
+        this.ordensServico = ordensServico;
     }
+
 }
