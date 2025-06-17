@@ -48,29 +48,6 @@ http://localhost:8080
 - `/ordens-servico`
 - `/pagamentos`
 - `/relatorios/financeiro`
-
-(Consulte os controllers para detalhes de cada endpoint.)
-
-## 🧱 Estrutura do Projeto
-
-```
-backend/
-├── pom.xml                       # Configuração do Maven
-├── mvnw / mvnw.cmd               # Maven wrapper
-├── src/
-│   └── main/
-│       ├── java/br/com/autogyn/autogyn_oficina/
-│       │   ├── controller/       # Camada de controle (REST)
-│       │   ├── dto/              # Objetos de transferência de dados
-│       │   ├── decorator/        # Padrão Decorator para serviços adicionais
-│       │   ├── factory/          # Padrão Factory (serviços/pagamentos)
-│       │   ├── observer/         # Padrão Observer (notificações/monitoramento)
-│       │   ├── iterator/         # Padrão Iterator (listas customizadas)
-│       │   └── AutogynOficinaApplication.java
-│       └── resources/
-│           └── application.properties  # Configurações da aplicação
-```
-
 ## 💡 Padrões de Projeto Utilizados
 
 O projeto utiliza os seguintes padrões de projeto para tornar o código mais modular, reutilizável e extensível:
