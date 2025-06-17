@@ -17,7 +17,7 @@ Este projeto é um sistema back-end desenvolvido com **Spring Boot** para gerenc
 1. Clone o repositório:
 
 ```bash
-git clone <URL_DO_REPOSITORIO>
+git clone https://github.com/CodeGuerrA/pi-5-periodo.git
 cd backend
 ```
 
