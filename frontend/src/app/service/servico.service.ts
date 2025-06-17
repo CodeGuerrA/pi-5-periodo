@@ -3,11 +3,17 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Servico } from '../model/servico.module';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class ServicoService {
   private apiUrl = 'http://localhost:8080/servicos';
 
   constructor(private http: HttpClient) {}
+
+  createServico(servico: Servico): Observable<Servico> {
+    return this.http.post<Servico>(this.apiUrl, servico);
+  }
 
   getServicos(): Observable<Servico[]> {
     return this.http.get<Servico[]>(this.apiUrl);
@@ -15,10 +21,6 @@ export class ServicoService {
 
   getServicoById(id: number): Observable<Servico> {
     return this.http.get<Servico>(`${this.apiUrl}/${id}`);
-  }
-
-  createServico(servico: Servico): Observable<Servico> {
-    return this.http.post<Servico>(this.apiUrl, servico);
   }
 
   updateServico(id: number, servico: Servico): Observable<Servico> {

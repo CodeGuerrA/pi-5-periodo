@@ -1,0 +1,50 @@
+<div class="container">
+  <h2>{{ isEditMode ? 'Editar Veículo' : 'Novo Veículo' }}</h2>
+
+  <form [formGroup]="veiculoForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="full-width">
+      <mat-label>Placa</mat-label>
+      <input matInput formControlName="placa" required>
+      <mat-error *ngIf="veiculoForm.get('placa')?.hasError('pattern')">Formato: ABC1234</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Modelo</mat-label>
+      <input matInput formControlName="modelo" required>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Ano</mat-label>
+      <input matInput formControlName="ano" required>
+      <mat-error *ngIf="veiculoForm.get('ano')?.hasError('pattern')">Ano inválido</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Cor</mat-label>
+      <input matInput formControlName="cor">
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Tipo</mat-label>
+      <mat-select formControlName="tipo" required>
+        <mat-option *ngFor="let tipo of tipos" [value]="tipo">{{ tipo }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Cliente</mat-label>
+      <mat-select formControlName="clienteId" required>
+        <mat-option *ngFor="let cliente of clientes" [value]="cliente.id">
+          {{ cliente.nome }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="buttons">
+      <button mat-raised-button color="primary" type="submit" [disabled]="veiculoForm.invalid">
+        {{ isEditMode ? 'Salvar Alterações' : 'Cadastrar' }}
+      </button>
+      <button mat-button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,29 @@
+<div class="container">
+  <h2>Lista de Peças</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Codigo</th>
+        <th>Descrição</th>
+        <th>Preço</th>
+        <th>Quantidade</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of pecas">
+        <td>{{ p.id }}</td>
+        <td>{{ p.codigo }}</td>
+        <td>{{ p.descricao}}</td>
+        <td>{{ p.precoUnitario }}</td>
+        <td>{{ p.quantidadeEstoque }}</td>
+        <td>
+          <a [routerLink]="['/pecas/editar', p.id]">Editar</a>
+          <button (click)="excluir(p.id!)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <a class="novo" routerLink="/pecas/novo">Nova Peça</a>
+</div>

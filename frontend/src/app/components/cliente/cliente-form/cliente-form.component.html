@@ -1,0 +1,32 @@
+<div class="container">
+  <h2>{{ isEditMode ? 'Editar Cliente' : 'Novo Cliente' }}</h2>
+  
+  <form [formGroup]="clienteForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="full-width">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="nome" required>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Endereço</mat-label>
+      <input matInput formControlName="endereco" required>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Telefone</mat-label>
+      <input matInput formControlName="telefone" required>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Documento</mat-label>
+      <input matInput formControlName="documento" required>
+    </mat-form-field>
+
+    <div class="buttons">
+      <button mat-raised-button color="primary" type="submit" [disabled]="clienteForm.invalid">
+        {{ isEditMode ? 'Salvar Alterações' : 'Cadastrar' }}
+      </button>
+      <button mat-button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
+</div>

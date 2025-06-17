@@ -1,0 +1,32 @@
+<div class="container">
+  <h2>{{ isEditMode ? 'Editar Peça' : 'Nova Peça' }}</h2>
+
+  <form [formGroup]="pecaForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="full-width">
+      <mat-label>Código</mat-label>
+      <input matInput formControlName="codigo" required />
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Descrição</mat-label>
+      <input matInput formControlName="descricao" required />
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Preço Unitário</mat-label>
+      <input matInput type="number" formControlName="precoUnitario" required />
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Quantidade em Estoque</mat-label>
+      <input matInput type="number" formControlName="quantidadeEstoque" required />
+    </mat-form-field>
+
+    <div class="buttons">
+      <button mat-raised-button color="primary" type="submit" [disabled]="pecaForm.invalid">
+        {{ isEditMode ? 'Salvar Alterações' : 'Cadastrar' }}
+      </button>
+      <button mat-button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
+</div>

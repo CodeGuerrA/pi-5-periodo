@@ -1,8 +1,11 @@
+export type TipoVeiculos = 'CARRO' | 'MOTO'; 
+
 export interface Veiculo {
   id?: number;
-  marca: string;
-  modelo: string;
   placa: string;
-  ano: number;
-  clienteId: number; // referência ao dono do veículo
+  modelo: string;
+  ano: string;         
+  cor: string;
+  tipo: TipoVeiculos;
+  clienteId: number;   
 }

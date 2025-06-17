@@ -1,6 +1,7 @@
 export interface Peca {
   id?: number;
-  nome: string;
-  preco: number;
-  quantidade: number;
+  codigo: string;
+  descricao: string;
+  precoUnitario: number;
+  quantidadeEstoque: number;
 }

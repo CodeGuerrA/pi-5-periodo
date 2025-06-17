@@ -3,9 +3,19 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "controleDeOficinaWeb": {
+    "piWebVersao2": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "standalone": false
+        },
+        "@schematics/angular:directive": {
+          "standalone": false
+        },
+        "@schematics/angular:pipe": {
+          "standalone": false
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -13,7 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/controle-de-oficina-web",
+            "outputPath": "dist/pi-web-versao2",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -27,6 +37,7 @@
               }
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/magenta-violet.css",
               "src/styles.css"
             ],
             "scripts": [],
@@ -64,10 +75,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "controleDeOficinaWeb:build:production"
+              "buildTarget": "piWebVersao2:build:production"
             },
             "development": {
-              "buildTarget": "controleDeOficinaWeb:build:development"
+              "buildTarget": "piWebVersao2:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -90,6 +101,7 @@
               }
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/magenta-violet.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -99,6 +111,6 @@
     }
   },
   "cli": {
-    "analytics": "1032eb95-4bed-4a98-a8ad-08ab723ca227"
+    "analytics": "245b6c8a-078a-414d-b4b5-43b03f74b973"
   }
 }

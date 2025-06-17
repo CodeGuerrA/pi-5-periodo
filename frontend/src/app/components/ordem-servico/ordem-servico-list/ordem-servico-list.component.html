@@ -1,0 +1,25 @@
+<div class="container">
+  <h2>Lista de Ordens de Serviço</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Descrição do Problema</th>
+        <th>Status</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ordem of ordens">
+        <td>{{ ordem.id }}</td>
+        <td>{{ ordem.descricaoProblema }}</td>
+        <td>{{ ordem.status }}</td>
+        <td>
+          <a [routerLink]="['/ordem-servico/editar/:id', ordem.id]">Editar</a>
+          <button (click)="excluir(ordem.id!)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <a class="novo" routerLink="/ordem-servicos/novo">Nova Ordem de Serviço</a>
+</div>

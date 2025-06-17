@@ -1,0 +1,25 @@
+<div class="container">
+  <h2>Lista de Itens de Peça</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome da Peça</th>
+        <th>Quantidade</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of itens">
+        <td>{{ item.id }}</td>
+        <td>{{ item.peca?.nome }}</td>
+        <td>{{ item.quantidade }}</td>
+        <td>
+          <a [routerLink]="['/itens/editar/:id', item.id]">Editar</a>
+          <button (click)="excluir(item.id)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <a class="novo" routerLink="/itens/novo">Novo Item de Peça</a>
+</div>

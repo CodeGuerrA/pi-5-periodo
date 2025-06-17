@@ -1,0 +1,62 @@
+<div class="container">
+  <h2>{{ isEditMode ? 'Editar Ordem de Serviço' : 'Nova Ordem de Serviço' }}</h2>
+
+  <form [formGroup]="ordemForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="full-width">
+      <mat-label>Cliente</mat-label>
+      <mat-select formControlName="clienteId" required>
+        <mat-option *ngFor="let cliente of clientes" [value]="cliente.id">
+          {{ cliente.nome }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Veículo</mat-label>
+      <mat-select formControlName="veiculoId" required>
+        <mat-option *ngFor="let veiculo of veiculos" [value]="veiculo.id">
+          {{ veiculo.modelo }} ({{ veiculo.placa }})
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Descrição do Problema</mat-label>
+      <textarea matInput formControlName="descricaoProblema" required></textarea>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status" required>
+        <mat-option *ngFor="let status of statusOptions" [value]="status">
+          {{ status }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Peças</mat-label>
+      <mat-select formControlName="itemPecaIds" multiple required>
+        <mat-option *ngFor="let item of itensPeca" [value]="item.id">
+          {{ item.nome }} - {{ item.quantidadeDisponivel }} disp.
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Serviços</mat-label>
+      <mat-select formControlName="servicoIds" multiple required>
+        <mat-option *ngFor="let servico of servicos" [value]="servico.id">
+          {{ servico.nome }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="buttons">
+      <button mat-raised-button color="primary" type="submit" [disabled]="ordemForm.invalid">
+        {{ isEditMode ? 'Salvar Alterações' : 'Cadastrar' }}
+      </button>
+      <button mat-button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
+</div>
